@@ -61,7 +61,7 @@ class Main extends Component {
           {this.state.cityData.lat}
           {this.state.cityData.lon}
         </p>
-        }
+        
       </>
     );
   }
