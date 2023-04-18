@@ -13,7 +13,8 @@ function App() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "95%",
+          height: "100%",
+          backgroundColor: "grey",
         }}
       >
         <Main />
