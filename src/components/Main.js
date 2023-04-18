@@ -2,6 +2,7 @@ import { Component } from "react";
 import axios from "axios";
 import { Col, Image } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 
 class Main extends Component {
   constructor(props) {
@@ -48,31 +49,37 @@ class Main extends Component {
   render() {
     return (
       <>
-        <h2>City Data</h2>
-        <form onSubmit={this.getCityData}>
-          <label>
-            Enter City Name
-            <input type="text" onInput={this.handleCityInput} />
-          </label>
-          <button type="submit">Explore!</button>
-        </form>
-        {this.state.error ? (
-          <Alert variant="primary">
-          <p>{this.state.errorMsg}</p>
-          </Alert>
-        ) : (
-          <p>{this.state.cityData.display_name}</p>
-        )}
-        <p>
-          {this.state.cityData.display_name}
-          {this.state.cityData.lat}
-          {this.state.cityData.lon}
-        </p>
-        <Col className="city-map">
-          {this.state.mapUrl && (
-            <Image src={this.state.mapUrl} alt="Map of the city" />
-          )}
-        </Col>
+        <div>
+          <h2>City Data</h2>
+          <Col xs={3} md={6}>
+            <form onSubmit={this.getCityData}>
+              <label>
+                Enter City Name
+                <input type="text" onInput={this.handleCityInput} />
+              </label>
+              <Button variant="info" type="submit">Explore!</Button>
+            </form>
+          </Col>
+          <Col>
+            {this.state.error ? (
+              <Alert variant="danger">
+                <p>{this.state.errorMsg}</p>
+              </Alert>
+            ) : (
+              <p>{this.state.cityData.display_name}</p>
+            )}
+            <ul>
+              <li>City: {this.state.cityData.display_name}</li>
+              <li>Latitude: {this.state.cityData.lat}</li>
+              <li>Longitude: {this.state.cityData.lon}</li>
+            </ul>
+          </Col>
+          <Col className="city-map">
+            {this.state.mapUrl && (
+              <Image src={this.state.mapUrl} alt="Map of the city" />
+            )}
+          </Col>
+        </div>
       </>
     );
   }
