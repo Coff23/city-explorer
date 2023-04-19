@@ -1,6 +1,6 @@
 import { Component } from "react";
 import axios from "axios";
-import { AccordionCollapse, Col, Image } from "react-bootstrap";
+import { Col, Image } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Weather from './Weather';
@@ -25,16 +25,17 @@ class Main extends Component {
       city: event.target.value,
     });
   };
-
+  
   getCityData = async (event) => {
     event.preventDefault();
     try {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATION_API_KEY}&q=${this.state.city}&format=json`;
-
+      
       let cityData = await axios.get(url);
-
+      
       let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=11&size=600x400&format=png`;
-
+      
+      this.handleWeather(event);
       console.log(cityData.data[0]);
 
       this.setState({
@@ -50,12 +51,14 @@ class Main extends Component {
     }
   };
 
-  handleWeather = async (ev) => {
-    ev.preventDefault();
+  handleWeather = async (event) => {
+    event.preventDefault();
     try {
-      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
+      let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
 
-      let weatherData = await AccordionCollapse.get(weatherUrl);
+      let weatherData = await axios.get(url);
+
+      console.log(this.cityData.data);
 
       this.setState({
         weatherData: weatherData.data.description,
