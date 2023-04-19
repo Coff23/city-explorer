@@ -4,9 +4,17 @@ import React from 'react';
 
 class Weather extends React.Component {
     render() {
+        let weatherForecast;
+        if (this.props.weatherData) {
+            weatherForecast = this.props.weatherData.map((weather) => {
+                return (
+                    <p>On {weather.date} it will be {weather.description}.</p>
+                );
+            });
+        }
         return (
             <>
-                <p>On {this.props.dateData} it will be {this.props.weatherData}.</p>
+                {weatherForecast}
             </>
         )
     }

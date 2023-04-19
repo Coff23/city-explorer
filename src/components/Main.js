@@ -14,9 +14,8 @@ class Main extends Component {
       mapUrl: "",
       error: false,
       errorMsg: "",
-      weatherData: '',
-      showWeather: false,
-      dateData: '',
+      weatherData: [],
+      showWeather: false
     };
   }
 
@@ -35,11 +34,12 @@ class Main extends Component {
       
       let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=11&size=600x400&format=png`;
       
-      this.handleWeather();
+      this.handleWeather(cityData.data[0].lat, cityData.data[0].lon);
       console.log(cityData.data[0]);
 
       this.setState({
         cityData: cityData.data[0],
+        city: cityData.data[0].display_name,
         mapUrl: mapUrl,
         error: false,
       });
@@ -47,23 +47,28 @@ class Main extends Component {
       this.setState({
         error: true,
         errorMsg: error.message,
+        city: "",
+        cityData: [],
+        mapUrl: "",
+        weatherData: [],
+        showWeather: false
       });
     }
   };
 
-  handleWeather = async () => {
+  handleWeather = async (lat, lon) => {
     try {
-      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${lon}&lat=${lat}`;
 
       let weatherData = await axios.get(weatherUrl);
 
-      console.log(weatherData.data);
-
+        console.log(weatherData.data);
+      
       this.setState({
-        weatherData: weatherData.data.description,
-        dateData: weatherData.data.valid_date,
-        showWeather: true,
+        weatherData: weatherData.data,
+        showWeather: true
       });
+      console.log(this.state.weatherData);
     } catch (error) {
       console.log(error.message);
 
@@ -95,9 +100,8 @@ class Main extends Component {
             ) : (
               <p>{this.state.cityData.display_name}</p>
             )}
-            {
-              this.state.showWeather ? <Weather weatherData={this.state.weatherData} dateData={this.state.dateData} /> : <></>
-            }
+ 
+            {this.state.showWeather ? <Weather weatherData={this.state.weatherData} />: <p>None Found</p>}
             <ul>
               <li>City: {this.state.cityData.display_name}</li>
               <li>Latitude: {this.state.cityData.lat}</li>
