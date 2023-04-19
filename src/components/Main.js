@@ -35,7 +35,7 @@ class Main extends Component {
       
       let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=11&size=600x400&format=png`;
       
-      this.handleWeather(event);
+      this.handleWeather();
       console.log(cityData.data[0]);
 
       this.setState({
@@ -51,14 +51,13 @@ class Main extends Component {
     }
   };
 
-  handleWeather = async (event) => {
-    event.preventDefault();
+  handleWeather = async () => {
     try {
-      let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
 
-      let weatherData = await axios.get(url);
+      let weatherData = await axios.get(weatherUrl);
 
-      console.log(this.cityData.data);
+      console.log(weatherData.data);
 
       this.setState({
         weatherData: weatherData.data.description,
