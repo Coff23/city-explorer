@@ -50,11 +50,12 @@ class Main extends Component {
       });
     }
   };
+// HTTP: http://api.weatherbit.io/v2.0/forecast/daily?key={}units={I}
 
   handleWeather = async (event) => {
     event.preventDefault();
     try {
-      let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
+      let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API_KEY}&units=${I}`;
 
       let weatherData = await axios.get(url);
 
