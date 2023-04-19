@@ -1,8 +1,9 @@
 import { Component } from "react";
 import axios from "axios";
-import { Col, Image } from "react-bootstrap";
+import { AccordionCollapse, Col, Image } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import Weather from './Weather';
 
 class Main extends Component {
   constructor(props) {
@@ -13,6 +14,9 @@ class Main extends Component {
       mapUrl: "",
       error: false,
       errorMsg: "",
+      weatherData: '',
+      showWeather: false,
+      dateData: '',
     };
   }
 
@@ -46,6 +50,27 @@ class Main extends Component {
     }
   };
 
+  handleWeather = async (ev) => {
+    ev.preventDefault();
+    try {
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
+
+      let weatherData = await AccordionCollapse.get(weatherUrl);
+
+      this.setState({
+        weatherData: weatherData.data.description,
+        dateData: weatherData.data.valid_date,
+        showWeather: true,
+      });
+    } catch (error) {
+      console.log(error.message);
+
+      this.setState({
+        showWeather: false,
+      })
+    }
+  }
+
   render() {
     return (
       <>
@@ -68,6 +93,9 @@ class Main extends Component {
             ) : (
               <p>{this.state.cityData.display_name}</p>
             )}
+            {
+              this.state.showWeather ? <Weather weatherData={this.state.weatherData} dateData={this.state.dateData} /> : <></>
+            }
             <ul>
               <li>City: {this.state.cityData.display_name}</li>
               <li>Latitude: {this.state.cityData.lat}</li>
