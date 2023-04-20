@@ -124,7 +124,6 @@ class Main extends Component {
 
             {this.state.showWeather ? <Weather weatherData={this.state.weatherData} /> : <p>None Found</p>}
             <ul>
-              <li>City: {this.state.cityData.display_name}</li>
               <li>Latitude: {this.state.cityData.lat}</li>
               <li>Longitude: {this.state.cityData.lon}</li>
             </ul>
