@@ -16,9 +16,13 @@ class Main extends Component {
       error: false,
       errorMsg: "",
       weatherData: [],
+
       showWeather: false,
       movies: [],
       showMovie: false
+
+      showWeather: false
+
     };
   }
 
@@ -37,8 +41,13 @@ class Main extends Component {
 
       let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=11&size=600x400&format=png`;
 
+
       this.handleWeather(cityData.data[0].lat, cityData.data[0].lon);
       this.handleMovie(this.state.city);
+
+      
+      this.handleWeather(cityData.data[0].lat, cityData.data[0].lon);
+
       console.log(cityData.data[0]);
 
       this.setState({
@@ -63,16 +72,30 @@ class Main extends Component {
   handleWeather = async (lat, lon) => {
     try {
 
+ feature
+      let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API_KEY}&units=${I}`;
+
+
       let weatherUrl = `${process.env.REACT_APP_SERVER}/forecast?searchQuery=${this.state.city}&lon=${lon}&lat=${lat}`;
 
       let weatherData = await axios.get(weatherUrl);
 
+
       console.log(weatherData.data);
 
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${lon}&lat=${lat}`;
+
+
+      let weatherData = await axios.get(weatherUrl);
+
+
+        console.log(weatherData.data);
+      
       this.setState({
         weatherData: weatherData.data,
         showWeather: true
       });
+      console.log(this.state.weatherData);
     } catch (error) {
       console.log(error.message);
 
@@ -122,7 +145,12 @@ class Main extends Component {
               <p>{this.state.cityData.display_name}</p>
             )}
 
+
             {this.state.showWeather ? <Weather weatherData={this.state.weatherData} /> : <p>None Found</p>}
+
+ 
+            {this.state.showWeather ? <Weather weatherData={this.state.weatherData} />: <p>None Found</p>}
+
             <ul>
               <li>City: {this.state.cityData.display_name}</li>
               <li>Latitude: {this.state.cityData.lat}</li>
