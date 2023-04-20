@@ -1,9 +1,10 @@
 import { Component } from "react";
 import axios from "axios";
-import { Col, Image } from "react-bootstrap";
+import { Col, Image, Container, Row } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Weather from './Weather';
+import Movies from "./Movies";
 
 class Main extends Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class Main extends Component {
       error: false,
       errorMsg: "",
       weatherData: [],
-      showWeather: false
+      showWeather: false,
+      movies: [],
+      showMovie: false
     };
   }
 
@@ -24,17 +27,18 @@ class Main extends Component {
       city: event.target.value,
     });
   };
-  
+
   getCityData = async (event) => {
     event.preventDefault();
     try {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATION_API_KEY}&q=${this.state.city}&format=json`;
-      
+
       let cityData = await axios.get(url);
-      
+
       let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=11&size=600x400&format=png`;
-      
+
       this.handleWeather(cityData.data[0].lat, cityData.data[0].lon);
+      this.handleMovie(this.state.city);
       console.log(cityData.data[0]);
 
       this.setState({
@@ -55,27 +59,20 @@ class Main extends Component {
       });
     }
   };
-// HTTP: http://api.weatherbit.io/v2.0/forecast/daily?key={}units={I}
 
   handleWeather = async (lat, lon) => {
     try {
- feature
-      let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API_KEY}&units=${I}`;
 
-      let weatherData = await axios.get(url);
-
-      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${lon}&lat=${lat}`;
- main
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/forecast?searchQuery=${this.state.city}&lon=${lon}&lat=${lat}`;
 
       let weatherData = await axios.get(weatherUrl);
 
-        console.log(weatherData.data);
-      
+      console.log(weatherData.data);
+
       this.setState({
         weatherData: weatherData.data,
         showWeather: true
       });
-      console.log(this.state.weatherData);
     } catch (error) {
       console.log(error.message);
 
@@ -85,21 +82,38 @@ class Main extends Component {
     }
   }
 
+  handleMovie = async (city) => {
+    try {
+
+      let movieUrl = `${process.env.REACT_APP_SERVER}/movies?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&city=${this.state.city}`;
+
+      let movieData = await axios.get(movieUrl);
+
+      console.log(movieData.data);
+
+      this.setState({
+        movies: movieData.data,
+        showMovie: true
+      });
+    } catch (error) {
+      this.setState({
+        showMovies: false
+      });
+    }
+  }
+
   render() {
     return (
-      <>
-        <div>
+      <Container className="my-4">
+        <Row>
           <h2>City Data</h2>
-          <Col xs={3} md={6}>
-            <form onSubmit={this.getCityData}>
+            <form className="mb-4" onSubmit={this.getCityData}>
               <label>
                 Enter City Name
                 <input type="text" onInput={this.handleCityInput} />
               </label>
               <Button variant="info" type="submit">Explore!</Button>
             </form>
-          </Col>
-          <Col>
             {this.state.error ? (
               <Alert variant="danger">
                 <p>{this.state.errorMsg}</p>
@@ -107,21 +121,21 @@ class Main extends Component {
             ) : (
               <p>{this.state.cityData.display_name}</p>
             )}
- 
-            {this.state.showWeather ? <Weather weatherData={this.state.weatherData} />: <p>None Found</p>}
+
+            {this.state.showWeather ? <Weather weatherData={this.state.weatherData} /> : <p>None Found</p>}
             <ul>
               <li>City: {this.state.cityData.display_name}</li>
               <li>Latitude: {this.state.cityData.lat}</li>
               <li>Longitude: {this.state.cityData.lon}</li>
             </ul>
-          </Col>
           <Col className="city-map">
             {this.state.mapUrl && (
-              <Image src={this.state.mapUrl} alt="Map of the city" />
+              <Image src={this.state.mapUrl} alt="Map of the city"/>
             )}
           </Col>
-        </div>
-      </>
+            <Movies movies={this.state.movies} />
+        </Row>
+      </Container>
     );
   }
 }

@@ -5,20 +5,12 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    
+
     <>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          backgroundColor: "grey",
-        }}
-      >
-        <Main />
-      </div>
+
+      <Main className="flex-grow-1" />
+
       <Footer />
     </>
   );
