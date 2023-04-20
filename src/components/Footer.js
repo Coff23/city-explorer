@@ -2,9 +2,9 @@ import { Component } from "react";
 
 class Footer extends Component {
     render() {
-        return(
+        return (
             <>
-            <p>Made by Joshua Coffey</p>
+                <p>Made by Joshua Coffey</p>
             </>
         );
     }

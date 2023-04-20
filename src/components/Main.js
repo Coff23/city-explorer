@@ -109,8 +109,8 @@ class Main extends Component {
           <h2>City Data</h2>
             <form className="mb-4" onSubmit={this.getCityData}>
               <label>
-                Enter City Name
-                <input type="text" onInput={this.handleCityInput} />
+                <h6>Enter City Name</h6>
+                <input type="text" onInput={this.handleCityInput} style={{height: '2.25rem'}} />
               </label>
               <Button variant="info" type="submit">Explore!</Button>
             </form>

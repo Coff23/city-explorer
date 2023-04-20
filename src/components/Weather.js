@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Container, Col} from 'react-bootstrap';
+import { Row, Container, Col, Card } from 'react-bootstrap';
 
 
 
@@ -9,7 +9,10 @@ class Weather extends React.Component {
         if (this.props.weatherData) {
             weatherForecast = this.props.weatherData.map((weather) => {
                 return <Col xs={3}>
-                    <p>On {weather.date} it will be {weather.description}.</p>
+                    <Card style={{width:'18rem'}}>
+                        <h6>{weather.date}</h6>
+                    <p>{weather.description}.</p>
+                    </Card>
                 </Col>
             });
         }

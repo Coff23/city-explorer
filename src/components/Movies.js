@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Container, Row, Col, Image} from 'react-bootstrap';
+import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 
 class Movies extends Component {
     render() {
@@ -8,8 +8,10 @@ class Movies extends Component {
             movieRender = this.props.movies.map((movie) => {
                 let imageRender = `https://image.tmdb.org/t/p/w500/${movie.imgUrl}`;
                 return <Col xs={6} md={4}>
-                        <p>{movie.title}</p>
+                    <Card style={{width:'25rem'}}>
+                        <h6>{movie.title}</h6>
                         <Image src={imageRender} alt={movie.title} fluid/>
+                        </Card>
                     </Col>
                 
             })
