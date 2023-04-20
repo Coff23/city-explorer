@@ -1,11 +1,12 @@
 import { Component } from 'react';
-import { Container, Row, Col, Image, Card } from 'react-bootstrap';
+import { Col, Image, Card } from 'react-bootstrap';
+import Movie from './Movie';
 
 class Movies extends Component {
     render() {
-        let movieRender;
+        // let movieRender;
         if (this.props.movies) {
-            movieRender = this.props.movies.map((movie) => {
+            this.movieRender = this.props.movies.map((movie) => {
                 let imageRender = `https://image.tmdb.org/t/p/w500/${movie.imgUrl}`;
                 return <Col xs={6} md={4}>
                     <Card style={{width:'25rem'}}>
@@ -17,11 +18,7 @@ class Movies extends Component {
             })
         }
         return (
-            <Container>
-            <Row>
-                {movieRender}
-            </Row>
-            </Container>
+            <Movie movieRender={this.movieRender} />
         )
     }
 }

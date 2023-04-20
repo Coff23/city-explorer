@@ -1,13 +1,14 @@
 import React from 'react';
-import { Row, Container, Col, Card } from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
+import WeatherDay from './WeatherDay';
 
 
 
 class Weather extends React.Component {
     render() {
-        let weatherForecast;
+        // let weatherForecast;
         if (this.props.weatherData) {
-            weatherForecast = this.props.weatherData.map((weather) => {
+            this.weatherForecast = this.props.weatherData.map((weather) => {
                 return <Col xs={3}>
                     <Card style={{width:'18rem'}}>
                         <h6>{weather.date}</h6>
@@ -17,9 +18,7 @@ class Weather extends React.Component {
             });
         }
         return (
-            <Container>
-                <Row>{weatherForecast}</Row>
-            </Container>
+            <WeatherDay weatherForecast={this.weatherForecast}/>
         )
     }
 }
