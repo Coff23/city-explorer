@@ -1,10 +1,12 @@
 import { Component } from "react";
 import axios from "axios";
-import { Col, Image, Container, Row } from "react-bootstrap";
-import Alert from "react-bootstrap/Alert";
+import { Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Weather from './Weather';
 import Movies from "./Movies";
+import Map from "./Map";
+import AlertMsg from "./Error";
+import Form from "./Form";
 
 class Main extends Component {
   constructor(props) {
@@ -107,17 +109,9 @@ class Main extends Component {
       <Container className="my-4">
         <Row>
           <h2>City Data</h2>
-            <form className="mb-4" onSubmit={this.getCityData}>
-              <label>
-                <h6>Enter City Name</h6>
-                <input type="text" onInput={this.handleCityInput} style={{height: '2.25rem'}} />
-              </label>
-              <Button variant="info" type="submit">Explore!</Button>
-            </form>
+      <Form getCityData={this.getCityData} handleCityInput={this.handleCityInput}/>
             {this.state.error ? (
-              <Alert variant="danger">
-                <p>{this.state.errorMsg}</p>
-              </Alert>
+              <AlertMsg errorMsg={this.state.errorMsg} />
             ) : (
               <p>{this.state.cityData.display_name}</p>
             )}
@@ -127,11 +121,7 @@ class Main extends Component {
               <li>Latitude: {this.state.cityData.lat}</li>
               <li>Longitude: {this.state.cityData.lon}</li>
             </ul>
-          <Col className="city-map">
-            {this.state.mapUrl && (
-              <Image src={this.state.mapUrl} alt="Map of the city"/>
-            )}
-          </Col>
+              <Map mapUrl={this.state.mapUrl}/>
             <Movies movies={this.state.movies} />
         </Row>
       </Container>
