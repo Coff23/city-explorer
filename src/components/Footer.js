@@ -4,7 +4,7 @@ class Footer extends Component {
     render() {
         return (
             <>
-                <p>Made by Joshua Coffey</p>
+                <p style={{ color: 'white', textAlign: 'center'}}>Made by Joshua Coffey</p>
             </>
         );
     }

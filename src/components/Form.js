@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 class Form extends Component {
     render() {
         return (
-            <form className="mb-4" onSubmit={this.props.getCityData}>
+            <form className="mb-4" onSubmit={this.props.getCityData} style={{ color: 'white' }}>
             <label>
               <h6>Enter City Name</h6>
               <input type="text" onInput={this.props.handleCityInput} style={{height: '2.25rem'}} />

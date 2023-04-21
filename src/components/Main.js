@@ -1,7 +1,6 @@
 import { Component } from "react";
 import axios from "axios";
 import { Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import Weather from './Weather';
 import Movies from "./Movies";
 import Map from "./Map";
@@ -108,16 +107,16 @@ class Main extends Component {
     return (
       <Container className="my-4">
         <Row>
-          <h2>City Data</h2>
+          <h2 style={{ color: 'white' }}>City Data</h2>
       <Form getCityData={this.getCityData} handleCityInput={this.handleCityInput}/>
             {this.state.error ? (
-              <AlertMsg errorMsg={this.state.errorMsg} />
+              <AlertMsg errorMsg={this.state.errorMsg} style={{ color: 'white' }} />
             ) : (
-              <p>{this.state.cityData.display_name}</p>
+              <p style={{ color: 'white' }}>{this.state.cityData.display_name}</p>
             )}
 
-            {this.state.showWeather ? <Weather weatherData={this.state.weatherData} /> : <p>None Found</p>}
-            <ul>
+            {this.state.showWeather ? <Weather weatherData={this.state.weatherData} /> : <p style={{ color: 'white' }}>None Found</p>}
+            <ul style={{ color: 'white' }}>
               <li>Latitude: {this.state.cityData.lat}</li>
               <li>Longitude: {this.state.cityData.lon}</li>
             </ul>

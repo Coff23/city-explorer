@@ -38,3 +38,8 @@
 }
 
 html, body, #root { height: 100vh; }
+
+body {
+  background-image: url(../src/components/images/background2.jpg);
+  background-size: cover;
+}
